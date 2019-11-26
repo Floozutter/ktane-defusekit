@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ktane-defusekit"
+version = "0.1.0"
+description = "An interactive bomb defusal manual for the game Keep Talking and Nobody Explodes"
+authors = ["Floozutter <floozutter@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+windows-curses = { version = "^2.1", optional = true }
+
+[tool.poetry.extras]
+windows = ["windows-curses"]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

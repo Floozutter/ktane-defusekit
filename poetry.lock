@@ -1,0 +1,17 @@
+[[package]]
+category = "main"
+description = "Support for the standard curses module on Windows"
+name = "windows-curses"
+optional = true
+python-versions = "*"
+version = "2.1.0"
+
+[extras]
+windows = ["windows-curses"]
+
+[metadata]
+content-hash = "06316a758f1a823aab11ce6d3465b9af8f5e9b2a7b5789a431a96c23f67393e4"
+python-versions = "^3.7"
+
+[metadata.hashes]
+windows-curses = ["261fde5680d1ce4ce116908996b9a3cfb0ffb03ea68d42240f62b56a9fa6af2c", "66034dc9a705d87308cc9ea90836f4ee60008a1d5e2c1d34ace627f60268158b", "669caad3ae16faf2d201d7ab3b8af418a2fd074d8a39d60ca26f3acb34b6afe5", "73bd3eebccfda55330783f165151de115bfa238d1332f0b2e224b550d6187840", "89a6d973f88cfe49b41ea80164dcbec209d296e0cec34a02002578b0bf464a64", "8ba7c000d7ffa5452bbd0966b96e69261e4f117ebe510aeb8771a9650197b7f0", "97084c6b37b1534f6a28a514d521dfae402f77dcbad42b14ee32e8d5bdc13648", "9e474a181f96d60429a4766145628264e60b72e7715876f9135aeb2e842f9433", "cfe64c30807c146ef8d094412f90f2a2c81ad6aefff3ebfe8e37aabe2f801303", "ff8c67f74b88944d99fa9d22971c05c335bc74f149120f0a69340c2c3a595497"]
