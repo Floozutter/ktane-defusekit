@@ -1,6 +1,5 @@
 import curses
-from curses.textpad import Textbox, rectangle
-from curses import wrapper
+import wards
 
 MODULE_NAMES = [
     "test apple",
@@ -8,15 +7,13 @@ MODULE_NAMES = [
     "quiz"
     ]
 
-def menu(stdscr):
-    # Initialize color pairs
-    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
-    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
-    curses.init_pair(3, curses.COLOR_YELLOW, curses.COLOR_BLACK)
-    curses.init_pair(4, curses.COLOR_BLUE, curses.COLOR_BLACK)
-    curses.init_pair(5, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
-    curses.init_pair(6, curses.COLOR_CYAN, curses.COLOR_BLACK)
+def dummy(stdscr):
+    print("Test!")
 
+def menu(stdscr):
+    # Standard setup
+    wards.stdsetup(stdscr)
+    
     # Display welcome message
     stdscr.move(0, 0)
     stdscr.addstr("Hi, welcome to ")
@@ -68,7 +65,7 @@ def menu(stdscr):
             break
         elif c == 10:   # Enter
             if valid_inputstring:
-                break
+                return dummy
         elif c in (258, 259):  # Down, Up
             if selectindex is None:
                 selectindex = 0
@@ -102,6 +99,15 @@ def menu(stdscr):
             inputstring_color = curses.color_pair(6)
         stdscr.addstr(inputstring, inputstring_color)
 
+def menu_selectloop(stdscr):
+    while True:
+        modulefunc = menu(stdscr)
+        if modulefunc is None:
+            break
+        modulefunc(stdscr)
 
+def main():
+    curses.wrapper(menu_selectloop)
+    
 if __name__ == "__main__":
-    wrapper(menu)
+    main()
