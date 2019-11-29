@@ -1,14 +1,18 @@
 import curses
-import wards
+from . import wards
+from .mods import dummy
 
-MODULE_NAMES = [
-    "test apple",
-    "test banana",
-    "quiz"
+MODULES = [
+    ("dummy", dummy.run),
+    ("test a", dummy.run),
+    ("test b", dummy.run)
     ]
 
-def dummy(scr):
-    print("Test!")
+def get_modulefunc(name):
+    for mod in MODULES:
+        if mod[0] == name:
+            return mod[1]
+    return None
 
 def menu(scr):
     def print_welcome():
@@ -38,10 +42,10 @@ def menu(scr):
     def setup_modulelist():
         module_xys = []
         scr.addstr("Available Modules:")
-        for i, name in enumerate(MODULE_NAMES):
+        for i, mod in enumerate(MODULES):
             scr.addstr("\n")
             scr.addstr((str(i) + ") ").rjust(6))
-            scr.addstr(name, curses.color_pair(6))
+            scr.addstr(mod[0], curses.color_pair(6))
             module_xys.append(scr.getyx())
         scr.addstr("\n\n")
         return module_xys
@@ -70,14 +74,11 @@ def menu(scr):
         inputstring = ""
         valid = False
         while True:
-            # Handle user input
             c = scr.getch()
-            #print(c)
             if c == 27:     # Esc
                 return None
-            elif c == 10:   # Enter
-                if valid:
-                    return dummy
+            elif c == 10 and valid:   # Enter
+                return get_modulefunc(inputstring)
             elif c in (258, 259):  # Down, Up
                 if selectindex is None:
                     selectindex = 0
@@ -86,7 +87,7 @@ def menu(scr):
                 else:  # c == 259
                     selectindex -= 1
                 selectindex = selectindex % len(module_xys)
-                inputstring = MODULE_NAMES[selectindex]
+                inputstring = MODULES[selectindex][0]
             elif c == 9:    # Tab
                 pass
             elif c == 21:   # Ctrl-U
@@ -95,7 +96,7 @@ def menu(scr):
                 inputstring = inputstring[:-1]
             elif 32 <= c <= 126:  # Printable
                 inputstring += str(chr(c))
-            valid = bool(inputstring in MODULE_NAMES)
+            valid = bool(inputstring in [mod[0] for mod in MODULES])
             # Update select arrow on module list
             update_modulelist(module_xys, selectindex)
             # Update user input box
@@ -121,12 +122,12 @@ def menu(scr):
     return inputloop(module_xys, inputbox_xy)
 
 
-def menu_selectloop(stdscr):
+def menu_selectloop(scr):
     while True:
-        modulefunc = menu(stdscr)
+        modulefunc = menu(scr)
         if modulefunc is None:
             break
-        modulefunc(stdscr)
+        modulefunc(scr)
 
 def main():
     curses.wrapper(menu_selectloop)
