@@ -101,24 +101,13 @@ def menu(scr):
             update_modulelist(module_xys, selectindex)
             # Update user input box
             update_inputbox(inputbox_xy, inputstring, valid)
-        
     
-    # Standard setup
     wards.stdsetup(scr)
-    
-    # Display welcome message
     print_welcome()
-
-    # Display controls help using list
     print_controls()
-
-    # Display modules using list
     module_xys = setup_modulelist()
-
-    # Setup user input box
     inputbox_xy = setup_inputbox()
     
-    # Input loop and get module function
     return inputloop(module_xys, inputbox_xy)
 
 
