@@ -1,11 +1,11 @@
 import curses
 from . import wards
 from .mods import dummy
+from .mods import complicatedwires
 
 MODULES = [
     ("dummy", dummy.run),
-    ("test a", dummy.run),
-    ("test b", dummy.run)
+    ("complicated-wires", complicatedwires.run)
     ]
 
 def get_modulefunc(name):
