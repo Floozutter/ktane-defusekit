@@ -1,5 +1,5 @@
 import curses
-from .. import wards
+from defusekit import wards
 
 
 

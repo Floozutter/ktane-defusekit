@@ -1,5 +1,5 @@
 import curses
-from .. import wards
+from defusekit import wards
 
 def run(scr):
     wards.stdsetup(scr)
