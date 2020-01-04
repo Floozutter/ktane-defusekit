@@ -2,7 +2,6 @@ import curses
 from defusekit import wards
 
 
-
 def get_instruction(red, blue, star, led):
     binstr = "".join(["1" if b else "0" for b in (red, blue, star, led)])
     wirestate = int(binstr, 2)
@@ -41,7 +40,7 @@ def run(scr):
     controls = (
         ("ESC", "Quit the module."),
         ("Q/W/E/R", "Toggle wire options."),
-        ("TAB", "Reset all wire options to no.")
+        ("TAB", "Reset all wire options to NO.")
         )
     for pair in controls:
         scr.addstr("\n")

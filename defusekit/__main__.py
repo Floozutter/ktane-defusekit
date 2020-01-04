@@ -1,10 +1,14 @@
 import curses
 from defusekit import wards
+
 from defusekit.mods import dummy
+from defusekit.mods import wires
 from defusekit.mods import complicatedwires
+
 
 MODULES = [
     ("dummy", dummy.run),
+    ("wires", wires.run),
     ("complicated-wires", complicatedwires.run)
     ]
 

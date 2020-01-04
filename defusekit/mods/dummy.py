@@ -1,6 +1,7 @@
 import curses
 from defusekit import wards
 
+
 def run(scr):
     wards.stdsetup(scr)
     scr.addstr("This is a dummy module!\n\n", curses.color_pair(0))
