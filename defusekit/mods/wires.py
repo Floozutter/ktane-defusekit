@@ -1,6 +1,6 @@
 import curses
 from defusekit import wards
-from enum import Emum
+from enum import Enum
 
 
 class Color(Enum):
@@ -16,7 +16,7 @@ def get_instruction(wires, is_even):
             return "Cut the second wire"
         elif wires[-1] is Color.WHITE:
             return "Cut the last wire"
-        elif sum(1 for w in wires if w is Color.BLUE) > 1):
+        elif sum(1 for w in wires if w is Color.BLUE) > 1:
             return "Cut the last blue wire"
         else:
             return "Cut the last wire"
@@ -30,4 +30,7 @@ def get_instruction(wires, is_even):
         raise ValueError("number of wires is not within [3, 6]")  
 
 def run(scr):
-    return
+    wards.stdsetup(scr)
+    scr.addstr("This module is not yet completed!\n\n", curses.color_pair(0))
+    scr.addstr("Press any key to exit.", curses.color_pair(3))
+    scr.getch()
