@@ -11,51 +11,44 @@ class Color(Enum):
     BLUE = 4
 
 def get_instruction(wires, is_odd):
-    # I wish I could declare all the list comprehensions up here,
-    # so that duplicate expressions wouldn't be reevaluated.
-    # But then, not all conditions are necessary to check at a time,
-    # so the expressions should be evaluated lazily.
-    # Gosh, maybe I should learn Haskell.
-    # (Wait, this isn't even a performance bottleneck...
-    #  Why am I worrying about this???)
     if len(wires) == 3:
-        if sum(1 for w in wires if w is Color.RED) == 0:
+        if wires.count(Color.RED) == 0:
             return "Cut the second wire"
         elif wires[-1] is Color.WHITE:
             return "Cut the last wire"
-        elif sum(1 for w in wires if w is Color.BLUE) > 1:
+        elif wires.count(Color.BLUE) > 1:
             return "Cut the last blue wire"
         else:
             return "Cut the last wire"
     elif len(wires) == 4:
-        if is_odd and (sum(1 for w in wires if w is Color.RED) > 1):
+        if is_odd and (wires.count(Color.RED) > 1):
             return "Cut the last red wire"
         elif (wires[-1] is Color.YELLOW) and \
-             (sum(1 for w in wires if w is Color.RED) == 0):
+             (wires.count(Color.RED) == 0):
             return "Cut the first wire"
-        elif sum(1 for w in wires if w is Color.BLUE) == 1:
+        elif wires.count(Color.BLUE) == 1:
             return "Cut the first wire"
-        elif sum(1 for w in wires if w is Color.YELLOW) > 1:
+        elif wires.count(Color.YELLOW) > 1:
             return "Cut the last wire"
         else:
             return "Cut the last wire"
     elif len(wires) == 5:
         if is_odd and (wires[-1] is Color.BLACK):
             return "Cut the fourth wire"
-        elif (sum(1 for w in wires if w is Color.RED) == 1) and \
-             (sum(1 for w in wires if w is Color.YELLOW) > 1):
+        elif (wires.count(Color.RED) == 1) and \
+             (wires.count(Color.YELLOW) > 1):
             return "Cut the first wire"
-        elif sum(1 for w in wires if w is Color.BLACK) == 0:
+        elif wires.count(Color.BLACK) == 0:
             return "Cut the second wire"
         else:
             return "Cut the first wire"
     elif len(wires) == 6:
-        if is_odd and (sum(1 for w in wires if w is Color.YELLOW) == 0):
+        if is_odd and (wires.count(Color.YELLOW) == 0):
             return "Cut the third wire"
-        elif (sum(1 for w in wires if w is Color.YELLOW) == 1) and \
-             (sum(1 for w in wires if w is Color.WHITE) > 1):
+        elif (wires.count(Color.YELLOW) == 1) and \
+             (wires.count(Color.WHITE) > 1):
             return "Cut the fourth wire"
-        elif sum(1 for w in wires if w is Color.RED) == 0:
+        elif wires.count(Color.RED) == 0:
             return "Cut the last wire"
         else:
             return "Cut the fourth wire"
