@@ -4,11 +4,11 @@ from enum import Enum
 
 
 class Color(Enum):
-    WHITE = 0
-    BLACK = 1
-    RED = 2
-    YELLOW = 3
-    BLUE = 4
+    WHITE = 1
+    BLACK = 2
+    RED = 3
+    YELLOW = 4
+    BLUE = 5
 
 def get_instruction(wires, is_odd):
     if len(wires) == 3:
@@ -55,8 +55,25 @@ def get_instruction(wires, is_odd):
     else:
         raise ValueError("number of wires is not within [3, 6]")  
 
+
 def run(scr):
     wards.stdsetup(scr)
+    scr.addstr("Module: ", curses.color_pair(0))
+    scr.addstr("wires\n\n", curses.color_pair(6))
+
+    scr.addstr("Controls", curses.color_pair(0))
+    controls = (
+        ("ESC", "Quit the module."),
+        ("[1, 5]", "Add wire of corresponding color."),
+        ("TAB", "Reset.")
+        )
+    for pair in controls:
+        scr.addstr("\n")
+        scr.addstr("- ".rjust(6))
+        scr.addstr(pair[0].ljust(8), curses.color_pair(3))
+        scr.addstr(": " + pair[1], curses.color_pair(0))
+    scr.addstr("\n\n")
+
     scr.addstr("This module is not yet completed!\n\n", curses.color_pair(0))
     scr.addstr("Press any key to exit.", curses.color_pair(3))
     scr.getch()
