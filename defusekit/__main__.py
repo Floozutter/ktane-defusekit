@@ -1,5 +1,6 @@
 import curses
 from defusekit import wards
+from defusekit import autocomplete
 
 from defusekit.mods import dummy
 from defusekit.mods import wires
@@ -93,7 +94,12 @@ def menu(scr):
                 selectindex = selectindex % len(module_xys)
                 inputstring = MODULES[selectindex][0]
             elif c == 9:    # Tab
-                pass
+                prediction = autocomplete.predict(
+                    (pair[0] for pair in MODULES),
+                    inputstring
+                    )
+                if prediction is not None:
+                    inputstring = prediction
             elif c == 21:   # Ctrl-U
                 inputstring = ""
             elif c == 8:    # Backspace
