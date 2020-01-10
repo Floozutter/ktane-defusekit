@@ -2,11 +2,9 @@ from functools import reduce
 
 
 def shared_start(a, b):
-    size = 0
-    for i, pair in enumerate(zip(a, b)):
-        if pair[0] != pair[1]:
-            break
-        size = i+1
+    indices_of_diff = (i for i, pair in enumerate(zip(a, b))
+                       if pair[0] != pair[1])
+    size = next(indices_of_diff, min(len(a), len(b)))
     return a[:size]
 
 def predict(wordbank, ini):
