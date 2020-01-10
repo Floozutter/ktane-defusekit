@@ -1,11 +1,11 @@
 from functools import reduce
+from itertools import takewhile
 
 
-def shared_start(a, b):
-    indices_of_diff = (i for i, pair in enumerate(zip(a, b))
-                       if pair[0] != pair[1])
-    size = next(indices_of_diff, min(len(a), len(b)))
-    return a[:size]
+def common_prefix(a, b):
+    shared_chars = (pair[0] if pair[0] == pair[1] else None
+                    for pair in zip(a, b))
+    return "".join(takewhile(lambda char: char is not None, shared_chars))
 
 def predict(wordbank, ini):
     valids = [word for word in wordbank if word.startswith(ini)]
@@ -14,4 +14,4 @@ def predict(wordbank, ini):
     elif len(valids) == 1:
         return valids[0]
     else:
-        return reduce(shared_start, valids)
+        return reduce(common_prefix, valids)
