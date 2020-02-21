@@ -1,4 +1,14 @@
+# Byte-compiled / optimized / DLL stuff
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Mypy stuff
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Celeste stuff
 
 # Bomb Defusal Manual PDF from www.bombmanual.com
 KeepTalkingAndNobodyExplodes-BombDefusalManual-v1.pdf
