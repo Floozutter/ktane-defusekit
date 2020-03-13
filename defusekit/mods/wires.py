@@ -1,7 +1,8 @@
 import curses
 from defusekit import wards
 from enum import Enum
-
+from defusekit.cursetypes import Window
+from typing import List
 
 class Color(Enum):
     WHITE = 1
@@ -10,7 +11,7 @@ class Color(Enum):
     YELLOW = 4
     BLUE = 5
 
-def get_instruction(wires, is_odd):
+def get_instruction(wires: List[Color], is_odd: bool) -> str:
     if len(wires) == 3:
         if wires.count(Color.RED) == 0:
             return "Cut the second wire"
@@ -56,7 +57,7 @@ def get_instruction(wires, is_odd):
         raise ValueError("number of wires is not within [3, 6]")  
 
 
-def run(scr):
+def run(scr: Window):
     wards.stdsetup(scr)
     scr.addstr("Module: ", curses.color_pair(0))
     scr.addstr("wires\n\n", curses.color_pair(6))

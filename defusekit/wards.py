@@ -3,6 +3,7 @@ Common helper functions for working with curses windows.
 """
 
 import curses
+from defusekit.cursetypes import Window
 
 
 def stdcolors() -> None:
@@ -16,7 +17,7 @@ def stdcolors() -> None:
     curses.init_pair(5, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
     curses.init_pair(6, curses.COLOR_CYAN, curses.COLOR_BLACK)
 
-def stdsetup(scr) -> None:
+def stdsetup(scr: Window) -> None:
     """
     Standard procedure for window setup.
     """

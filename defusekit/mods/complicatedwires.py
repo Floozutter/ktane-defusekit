@@ -1,8 +1,8 @@
 import curses
 from defusekit import wards
+from defusekit.cursetypes import Window
 
-
-def get_instruction(red, blue, star, led):
+def get_instruction(red: bool, blue: bool, star: bool, led: bool) -> str:
     binstr = "".join(["1" if b else "0" for b in (red, blue, star, led)])
     wirestate = int(binstr, 2)
     C = "Cut the wire"
@@ -31,7 +31,7 @@ def get_instruction(red, blue, star, led):
     return INSTRUCTIONS[wirestate]
         
 
-def run(scr):
+def run(scr: Window):
     wards.stdsetup(scr)
     scr.addstr("Module: ", curses.color_pair(0))
     scr.addstr("complicated-wires\n\n", curses.color_pair(6))
