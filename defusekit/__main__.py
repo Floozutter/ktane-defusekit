@@ -1,5 +1,5 @@
 """
-The main menu and entry point for the kit's modules.
+The main menu and entry point for accesing the defusekit's modules.
 """
 
 import curses
@@ -14,7 +14,7 @@ from defusekit.cursetypes import Window, Coord
 from typing import Any, Callable, Dict, List, Tuple
 
 
-KitProcedure = Callable[[Any], None]
+KitProcedure = Callable[[Window], None]
 
 MODULES: Dict[str, KitProcedure] = {
     "dummy" : dummy.run,
@@ -24,61 +24,63 @@ MODULES: Dict[str, KitProcedure] = {
 
 
 def menu(scr: Window) -> KitProcedure:
-    def print_welcome() -> None:
-        scr.addstr("Hi, welcome to ")
-        scr.addstr("ktane-defusekit", curses.color_pair(2))
-        scr.addstr("!\n", curses.color_pair(0))
-        scr.addstr("This is an interactive bomb defusal manual ")
-        scr.addstr("for Keep Talking and Nobody Explodes.")
-        scr.addstr("\n\n")
+    # Standard setup.
+    wards.stdsetup(scr)
 
-    def print_controls() -> None:
-        scr.addstr("Controls:")
-        controls = [
-            ("ESC", "Quit the program."),
-            ("UP, DOWN", "Navigate the module list."),
-            ("[type]", "Type module name into text prompt."),
-            ("TAB", "Autocomplete module name."),
-            ("ENTER", "Select module to run.")
-        ]
-        for pair in controls:
-            scr.addstr("\n")
-            scr.addstr("- ".rjust(6))
-            scr.addstr(pair[0].ljust(10), curses.color_pair(3))
-            scr.addstr(": " + pair[1], curses.color_pair(0))
-        scr.addstr("\n\n")
+    # Print a welcome message.
+    scr.addstr("Hi, welcome to ")
+    scr.addstr("ktane-defusekit", curses.color_pair(2))
+    scr.addstr("!\n", curses.color_pair(0))
+    scr.addstr("This is an interactive bomb defusal manual ")
+    scr.addstr("for Keep Talking and Nobody Explodes.")
+    scr.addstr("\n\n")
 
-    def setup_modulelist() -> List[Coord]:
-        module_xys = []
-        scr.addstr("Available Modules:")
-        for i, mod in enumerate(MODULES):
-            scr.addstr("\n")
-            scr.addstr((str(i) + ") ").rjust(6))
-            scr.addstr(mod, curses.color_pair(6))
-            module_xys.append(scr.getyx())
-        scr.addstr("\n\n")
-        return module_xys
+    # Print the controls.
+    scr.addstr("Controls:")
+    controls = [
+        ("ESC", "Quit the program."),
+        ("UP, DOWN", "Navigate the module list."),
+        ("[type]", "Type module name into text prompt."),
+        ("TAB", "Autocomplete module name."),
+        ("ENTER", "Select module to run.")
+    ]
+    for pair in controls:
+        scr.addstr("\n")
+        scr.addstr("- ".rjust(6))
+        scr.addstr(pair[0].ljust(10), curses.color_pair(3))
+        scr.addstr(": " + pair[1], curses.color_pair(0))
+    scr.addstr("\n\n")
 
-    def update_modulelist(module_xys: List[Coord], selectindex: int) -> None:
-        for i, pos in enumerate(module_xys):
+    # Print modules, and store their coordinates for later use.
+    module_coords: List[Coord] = []  # coordinates for updating selection cursor
+    scr.addstr("Available Modules:")
+    for i, mod in enumerate(MODULES):
+        scr.addstr("\n")
+        scr.addstr((str(i) + ") ").rjust(6))
+        scr.addstr(mod, curses.color_pair(6))
+        module_coords.append(scr.getyx())
+    scr.addstr("\n\n")
+
+    def update_cursor(selectindex: int) -> None:
+        for i, pos in enumerate(module_coords):
             scr.move(pos[0], pos[1])
             scr.clrtoeol()
             if i == selectindex:
                 scr.addstr("  <--", curses.color_pair(2))
 
-    def setup_inputbox() -> Coord:
-        scr.addstr(">>> ", curses.color_pair(2))
-        return scr.getyx()
+    # Print the inputbox, and store its coordinate.
+    scr.addstr(">>> ", curses.color_pair(2))
+    inputbox_coord = scr.getyx()  # coordinate for updating input text
 
-    def update_inputbox(inputbox_xy: Coord, inputstring: str, valid: bool):
-        scr.move(inputbox_xy[0], inputbox_xy[1])
+    def update_inputbox(inputstring: str, valid: bool):
+        scr.move(inputbox_coord[0], inputbox_coord[1])
         scr.clrtoeol()
         clr = curses.color_pair(0)
         if valid:
             clr = curses.color_pair(6)
         scr.addstr(inputstring, clr)
 
-    def inputloop(module_xys: List[Coord], inputbox_xy: Coord):
+    def inputloop():
         selectindex = None
         inputstring = ""
         valid = False
@@ -95,7 +97,7 @@ def menu(scr: Window) -> KitProcedure:
                     selectindex += 1
                 else:  # c == 259
                     selectindex -= 1
-                selectindex = selectindex % len(module_xys)
+                selectindex = selectindex % len(module_coords)
                 inputstring = list(MODULES.keys())[selectindex]
             elif c == 9:    # Tab
                 prediction = autocomplete.predict(
@@ -112,17 +114,11 @@ def menu(scr: Window) -> KitProcedure:
                 inputstring += str(chr(c))
             valid = bool(inputstring in MODULES)
             # Update select arrow on module list
-            update_modulelist(module_xys, selectindex)
+            update_cursor(selectindex)
             # Update user input box
-            update_inputbox(inputbox_xy, inputstring, valid)
+            update_inputbox(inputstring, valid)
     
-    wards.stdsetup(scr)
-    print_welcome()
-    print_controls()
-    module_xys = setup_modulelist()
-    inputbox_xy = setup_inputbox()
-    
-    return inputloop(module_xys, inputbox_xy)
+    return inputloop()
 
 
 def selectloop(scr: Window) -> None:
