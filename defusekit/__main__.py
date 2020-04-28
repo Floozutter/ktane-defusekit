@@ -52,7 +52,7 @@ def menu(scr: Window) -> KitProcedure:
     scr.addstr("\n\n")
 
     # Print modules, and store their coordinates for later use.
-    module_coords: List[Coord] = []  # coordinates for updating selection cursor
+    module_coords: List[Coord] = []  # coords for updating selection cursor
     scr.addstr("Available Modules:")
     for i, mod in enumerate(MODULES):
         scr.addstr("\n")
@@ -70,7 +70,7 @@ def menu(scr: Window) -> KitProcedure:
 
     # Print the inputbox, and store its coordinate.
     scr.addstr(">>> ", curses.color_pair(2))
-    inputbox_coord = scr.getyx()  # coordinate for updating input text
+    inputbox_coord = scr.getyx()  # coord for updating input text
 
     def update_inputbox(inputstring: str, valid: bool):
         scr.move(inputbox_coord[0], inputbox_coord[1])
@@ -80,45 +80,37 @@ def menu(scr: Window) -> KitProcedure:
             clr = curses.color_pair(6)
         scr.addstr(inputstring, clr)
 
-    def inputloop():
-        selectindex = None
-        inputstring = ""
-        valid = False
-        while True:
-            c = scr.getch()
-            if c == 27:     # Esc
-                return None
-            elif c == 10 and valid:   # Enter
-                return MODULES[inputstring]
-            elif c in (258, 259):  # Down, Up
-                if selectindex is None:
-                    selectindex = 0
-                elif c == 258:
-                    selectindex += 1
-                else:  # c == 259
-                    selectindex -= 1
-                selectindex = selectindex % len(module_coords)
-                inputstring = list(MODULES.keys())[selectindex]
-            elif c == 9:    # Tab
-                prediction = autocomplete.predict(
-                    MODULES.keys(),
-                    inputstring
-                )
-                if prediction is not None:
-                    inputstring = prediction
-            elif c == 21:   # Ctrl-U
-                inputstring = ""
-            elif c == 8:    # Backspace
-                inputstring = inputstring[:-1]
-            elif 32 <= c <= 126:  # Printable
-                inputstring += str(chr(c))
-            valid = bool(inputstring in MODULES)
-            # Update select arrow on module list
-            update_cursor(selectindex)
-            # Update user input box
-            update_inputbox(inputstring, valid)
-    
-    return inputloop()
+    # Enter the input loop.
+    selectindex = None
+    inputstring = ""
+    valid = False
+    while True:
+        c = scr.getch()
+        if c == 27:  # Esc
+            return None
+        elif c == 10 and valid:  # Enter
+            return MODULES[inputstring]
+        elif c in (258, 259):  # Down, Up
+            if selectindex is None: selectindex  = 0  # Initial
+            elif c == 258:          selectindex += 1  # Down
+            else:                   selectindex -= 1  # Up
+            selectindex = selectindex % len(module_coords)
+            inputstring = list(MODULES.keys())[selectindex]
+        elif c == 9:  # Tab
+            pred = autocomplete.predict(MODULES.keys(), inputstring)
+            if pred is not None:
+                inputstring = pred
+        elif c == 21:  # Ctrl-U
+            inputstring = ""
+        elif c == 8:  # Backspace
+            inputstring = inputstring[:-1]
+        elif 32 <= c <= 126:  # Printable
+            inputstring += str(chr(c))
+        valid = bool(inputstring in MODULES)
+        # Update select arrow on module list
+        update_cursor(selectindex)
+        # Update user input box
+        update_inputbox(inputstring, valid)
 
 
 def selectloop(scr: Window) -> None:
