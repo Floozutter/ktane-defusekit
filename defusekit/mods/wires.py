@@ -1,8 +1,10 @@
 import curses
 from defusekit import wards
+
 from enum import Enum
-from defusekit.cursetypes import Window
+from defusekit.kittypes import Window
 from typing import List
+
 
 class Color(Enum):
     WHITE = 1
@@ -10,6 +12,7 @@ class Color(Enum):
     RED = 3
     YELLOW = 4
     BLUE = 5
+
 
 def get_instruction(wires: List[Color], is_odd: bool) -> str:
     if len(wires) == 3:

@@ -1,6 +1,6 @@
 import curses
 from defusekit import wards
-from defusekit.cursetypes import Window
+from defusekit.kittypes import Window
 
 def get_instruction(red: bool, blue: bool, star: bool, led: bool) -> str:
     binstr = "".join(["1" if b else "0" for b in (red, blue, star, led)])

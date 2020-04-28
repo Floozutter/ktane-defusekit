@@ -1,6 +1,6 @@
 import curses
 from defusekit import wards
-from defusekit.cursetypes import Window
+from defusekit.kittypes import Window
 
 
 def run(scr: Window):

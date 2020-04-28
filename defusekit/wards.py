@@ -3,7 +3,7 @@ Common helper functions for working with curses windows.
 """
 
 import curses
-from defusekit.cursetypes import Window
+from defusekit.kittypes import Window
 
 
 def stdcolors() -> None:
