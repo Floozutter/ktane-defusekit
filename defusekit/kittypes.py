@@ -12,4 +12,4 @@ Coord = Tuple[int, int]  # row, col coordinate
 
 # Types for menu logic.
 KitProcedure = Callable[[Window], None]  # entry point to a kit module
-Kitalogue = Dict[str, KitProcedure]  # named collection of module entry points
+Kitalogue = Dict[str, KitProcedure]  # collection of named module entry points
