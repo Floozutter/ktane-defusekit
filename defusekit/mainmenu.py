@@ -23,20 +23,13 @@ def menu(scr: Window, modules: Kitalogue) -> Optional[KitProcedure]:
     scr.addstr("\n\n")
 
     # Print the controls.
-    scr.addstr("Controls:")
-    controls = [
+    wards.print_controls(scr, (
         ("ESC", "Quit the program."),
         ("UP, DOWN", "Navigate the module list."),
         ("[type]", "Type module name into text prompt."),
         ("TAB", "Autocomplete module name."),
         ("ENTER", "Select module to run.")
-    ]
-    for pair in controls:
-        scr.addstr("\n")
-        scr.addstr("- ".rjust(6))
-        scr.addstr(pair[0].ljust(10), curses.color_pair(3))
-        scr.addstr(": " + pair[1], curses.color_pair(0))
-    scr.addstr("\n\n")
+    ))
 
     # Print modules, and store their coordinates for later use.
     module_coords: List[Coord] = []  # coords for updating selection cursor

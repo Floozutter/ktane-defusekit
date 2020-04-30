@@ -4,6 +4,7 @@ Common helper functions for working with curses windows.
 
 import curses
 from defusekit.kittypes import Window
+from typing import Iterable, Tuple
 
 
 def stdcolors() -> None:
@@ -23,3 +24,14 @@ def stdsetup(scr: Window) -> None:
     """
     scr.clear()  # clear the window
     stdcolors()  # set colors
+
+
+def print_controls(scr: Window, controls: Iterable[Tuple[str, str]]):
+    scr.addstr("Controls:", curses.color_pair(0))
+    maxkeysize = max(map(len, next(zip(*controls))))
+    for key, action in controls:
+        scr.addstr("\n")
+        scr.addstr("- ".rjust(6))
+        scr.addstr(key.ljust(maxkeysize + 1), curses.color_pair(3))
+        scr.addstr(": " + action, curses.color_pair(0))
+    scr.addstr("\n\n", curses.color_pair(0))

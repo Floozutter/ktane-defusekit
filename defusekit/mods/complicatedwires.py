@@ -36,18 +36,12 @@ def run(scr: Window):
     scr.addstr("Module: ", curses.color_pair(0))
     scr.addstr("complicated-wires\n\n", curses.color_pair(6))
     
-    scr.addstr("Controls:", curses.color_pair(0))
-    controls = (
+    # Print the controls.
+    wards.print_controls(scr, (
         ("ESC", "Quit the module."),
         ("Q/W/E/R", "Toggle wire options."),
         ("TAB", "Reset all wire options to NO.")
-        )
-    for pair in controls:
-        scr.addstr("\n")
-        scr.addstr("- ".rjust(6))
-        scr.addstr(pair[0].ljust(9), curses.color_pair(3))
-        scr.addstr(": " + pair[1], curses.color_pair(0))
-    scr.addstr("\n\n")
+    ))
 
     scr.addstr("Wire Settings:", curses.color_pair(0))
     setting_keys = ("Q", "W", "E", "R")
