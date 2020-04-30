@@ -10,14 +10,19 @@ from defusekit.mods import wires
 from defusekit.mods import complicatedwires
 
 from defusekit.kittypes import Window, KitProcedure, Kitalogue
-from typing import Optional
+from types import ModuleType
+from typing import Optional, Iterable
 
 
-MODULES: Kitalogue = {
-    dummy.NAME : dummy.main,
-    wires.NAME : wires.main,
-    complicatedwires.NAME : complicatedwires.main
-}
+def kitalogue(modules: Iterable[ModuleType]) -> Kitalogue:
+    """Makes a Kitalogue out of modules. (The name's a verb.)"""
+    return dict((mod.NAME, mod.main) for mod in modules)
+
+MODULES: Kitalogue = kitalogue((
+    dummy,
+    wires,
+    complicatedwires
+))
 
 
 def main(scr: Window) -> None:
