@@ -14,9 +14,9 @@ from typing import Optional
 
 
 MODULES: Kitalogue = {
-    "dummy" : dummy.run,
-    "wires" : wires.run,
-    "complicated-wires" : complicatedwires.run
+    dummy.NAME : dummy.main,
+    wires.NAME : wires.main,
+    complicatedwires.NAME : complicatedwires.main
 }
 
 

@@ -7,7 +7,8 @@ from defusekit.kittypes import Window
 from typing import Iterable, Tuple
 
 
-def stdcolors() -> None:
+# Non-printing wards.
+def colors() -> None:
     """
     Sets the standard window colors.
     """
@@ -18,15 +19,27 @@ def stdcolors() -> None:
     curses.init_pair(5, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
     curses.init_pair(6, curses.COLOR_CYAN, curses.COLOR_BLACK)
 
-def stdsetup(scr: Window) -> None:
+def setup(scr: Window) -> None:
     """
     Standard procedure for window setup.
     """
     scr.clear()  # clear the window
-    stdcolors()  # set colors
+    colors()     # set colors
 
 
-def print_controls(scr: Window, controls: Iterable[Tuple[str, str]]):
+# Printing wards.
+def print_modulename(scr: Window, name: str) -> None:
+    """
+    Prints the module name in the standard format.
+    """
+    scr.addstr("Module: ", curses.color_pair(0))
+    scr.addstr(name, curses.color_pair(6))
+    scr.addstr("\n\n", curses.color_pair(0))
+
+def print_controls(scr: Window, controls: Iterable[Tuple[str, str]]) -> None:
+    """
+    Prints the controls in the standard format.
+    """
     scr.addstr("Controls:", curses.color_pair(0))
     maxkeysize = max(map(len, next(zip(*controls))))
     for key, action in controls:

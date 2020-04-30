@@ -12,7 +12,7 @@ from typing import Optional
 
 def menu(scr: Window, modules: Kitalogue) -> Optional[KitProcedure]:
     # Standard setup.
-    wards.stdsetup(scr)
+    wards.setup(scr)
 
     # Print a welcome message.
     scr.addstr("Hi, welcome to ")

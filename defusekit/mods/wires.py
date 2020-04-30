@@ -1,3 +1,5 @@
+NAME = "wires"
+
 import curses
 from defusekit import wards
 
@@ -60,23 +62,14 @@ def get_instruction(wires: List[Color], is_odd: bool) -> str:
         raise ValueError("number of wires is not within [3, 6]")  
 
 
-def run(scr: Window):
-    wards.stdsetup(scr)
-    scr.addstr("Module: ", curses.color_pair(0))
-    scr.addstr("wires\n\n", curses.color_pair(6))
-
-    scr.addstr("Controls", curses.color_pair(0))
-    controls = (
+def main(scr: Window):
+    wards.setup(scr)
+    wards.print_modulename(scr, NAME)
+    wards.print_controls(scr, (
         ("ESC", "Quit the module."),
         ("[1, 5]", "Add wire of corresponding color."),
         ("TAB", "Reset.")
-        )
-    for pair in controls:
-        scr.addstr("\n")
-        scr.addstr("- ".rjust(6))
-        scr.addstr(pair[0].ljust(8), curses.color_pair(3))
-        scr.addstr(": " + pair[1], curses.color_pair(0))
-    scr.addstr("\n\n")
+    ))
 
     scr.addstr("This module is not yet completed!\n\n", curses.color_pair(0))
     scr.addstr("Press any key to exit.", curses.color_pair(3))

@@ -1,6 +1,10 @@
+NAME = "complicated-wires"
+
 import curses
 from defusekit import wards
+
 from defusekit.kittypes import Window
+
 
 def get_instruction(red: bool, blue: bool, star: bool, led: bool) -> str:
     binstr = "".join(["1" if b else "0" for b in (red, blue, star, led)])
@@ -31,12 +35,9 @@ def get_instruction(red: bool, blue: bool, star: bool, led: bool) -> str:
     return INSTRUCTIONS[wirestate]
         
 
-def run(scr: Window):
-    wards.stdsetup(scr)
-    scr.addstr("Module: ", curses.color_pair(0))
-    scr.addstr("complicated-wires\n\n", curses.color_pair(6))
-    
-    # Print the controls.
+def main(scr: Window):
+    wards.setup(scr)
+    wards.print_modulename(scr, NAME)
     wards.print_controls(scr, (
         ("ESC", "Quit the module."),
         ("Q/W/E/R", "Toggle wire options."),
@@ -95,4 +96,3 @@ def run(scr: Window):
             setting_states[2] = not setting_states[2]
         elif c in (82, 114):  # R
             setting_states[3] = not setting_states[3]
-        
