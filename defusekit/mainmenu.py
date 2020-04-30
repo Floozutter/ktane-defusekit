@@ -11,6 +11,10 @@ from typing import Optional
 
 
 def menu(scr: Window, modules: Kitalogue) -> Optional[KitProcedure]:
+    """
+    Enters the main menu state. Returns a KitProcedure as selected by the user.
+    Note: The name modules refers to KTaNE modules, not Python modules.
+    """
     # Standard setup.
     wards.setup(scr)
 

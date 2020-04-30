@@ -18,6 +18,7 @@ def kitalogue(modules: Iterable[ModuleType]) -> Kitalogue:
     """Makes a Kitalogue out of Python modules. (The name's a verb.)"""
     return dict((mod.NAME, mod.main) for mod in modules)
 
+# Note: The name modules refers to KTaNE modules, not Python modules.
 MODULES: Kitalogue = kitalogue((
     dummy,
     wires,
