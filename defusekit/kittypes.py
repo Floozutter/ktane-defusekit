@@ -7,7 +7,7 @@ from typing import Any, Callable, Tuple, Dict
 
 
 # Types for curses.
-Window = curses.window   # curses window
+Window = Any             # mypy doesn't like curses.window
 Coord = Tuple[int, int]  # row, col coordinate
 
 # Types for menu logic.

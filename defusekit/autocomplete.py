@@ -11,8 +11,8 @@ def common_prefix(a: str, b: str) -> str:
     """
     Returns the longest common prefix shared between two strings.
     """
-    shared_chars = (l if l == r else None for l, r in zip(a, b))
-    return "".join(takewhile(lambda char: char is not None, shared_chars))
+    shared_chars = (l if l == r else "" for l, r in zip(a, b))
+    return "".join(takewhile(lambda char: bool(char), shared_chars))
 
 def predict(wordbank: Iterable[str], initial: str) -> Optional[str]:
     """

@@ -7,7 +7,7 @@ from defusekit import wards
 from defusekit import autocomplete
 
 from defusekit.kittypes import Window, Coord, KitProcedure, Kitalogue
-from typing import Optional
+from typing import Optional, List
 
 
 def menu(scr: Window, modules: Kitalogue) -> Optional[KitProcedure]:
@@ -45,11 +45,11 @@ def menu(scr: Window, modules: Kitalogue) -> Optional[KitProcedure]:
         module_coords.append(scr.getyx())
     scr.addstr("\n\n")
 
-    def update_cursor(selectindex: int) -> None:
+    def update_cursor(selectindex: Optional[int]) -> None:
         for i, pos in enumerate(module_coords):
             scr.move(pos[0], pos[1])
             scr.clrtoeol()
-            if i == selectindex:
+            if selectindex is not None and i == selectindex:
                 scr.addstr("  <--", curses.color_pair(2))
 
     # Print the inputbox, and store its coordinate.
