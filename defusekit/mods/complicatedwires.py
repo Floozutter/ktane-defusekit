@@ -31,7 +31,7 @@ def get_instruction(red: bool, blue: bool, star: bool, led: bool) -> str:
         0b1101 : S,
         0b1110 : P,
         0b1111 : D
-        }
+    }
     return INSTRUCTIONS[wirestate]
         
 
