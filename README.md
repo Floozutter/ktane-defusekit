@@ -1,2 +1,2 @@
 # ktane-defusekit
-An interactive bomb defusal manual for the game Keep Talking and Nobody Explodes that runs in the terminal.
+an interactive bomb defusal manual for Keep Talking and Nobody Explodes!
